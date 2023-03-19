@@ -14,6 +14,7 @@ const App = () => {
 
     const [selected, setSelected] = useState(0);
     const [points, setPoints] = useState(new Uint8Array(8));
+    const [maxPoints, setMaxPoints] = useState("");
 
     const generateQuote = () => {
         let x = Math.floor(Math.random() * anecdotes.length);
@@ -24,7 +25,10 @@ const App = () => {
         const copy = [...points];
         copy[selected]++;
         setPoints(copy);
-        console.log(points[selected]);
+        let largest = points.indexOf(Math.max(...points));
+        console.log(points);
+        console.log(largest);
+        setMaxPoints(anecdotes[largest]);
     };
 
     return (
@@ -33,6 +37,8 @@ const App = () => {
             <p>has {points[selected]} votes</p>
             <button onClick={generateQuote}>get quote</button>
             <button onClick={voteButton}>vote</button>
+            <h1>Quote with the most votes</h1>
+            <p>{maxPoints}</p>
         </div>
     );
 };
