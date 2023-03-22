@@ -1,20 +1,28 @@
-const Course = ({ course }) => {
-    const sumTotal = course.parts.reduce(function (acc, curr) {
-        return acc + curr.exercises;
-    }, 0);
+const Course = ({ courses }) => {
+    let totalSum = 0;
+    const total = courses.forEach(
+        (course) =>
+            course.parts.reduce((acc, curr) => (totalSum += curr.exercises)),
+        0
+    );
 
     return (
         <>
-            <ul>
-                {course.parts.map((part) => (
-                    <li key={part.id}>
-                        {part.name} {part.exercises}
+            {courses.map((course) => (
+                <ul key={course.id}>
+                    <li>
+                        <b>{course.name}</b>
                     </li>
-                ))}
-            </ul>
-            <b>
-                <p>total of {sumTotal} exercises</p>
-            </b>
+                    {course.parts.map((part) => (
+                        <li key={part.id}>
+                            {part.name} - {part.exercises}
+                        </li>
+                    ))}
+                    <li>
+                        <b>total of {totalSum} exercises</b>
+                    </li>
+                </ul>
+            ))}
         </>
     );
 };
