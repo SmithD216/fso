@@ -3,9 +3,11 @@ import { useState } from "react";
 const App = () => {
     const [persons, setPersons] = useState([
         { name: "Arto Hellas", number: "040-1234567" },
+        { name: "Ada Lovelace", number: "39-44-5323523" },
     ]);
     const [newName, setNewName] = useState("");
     const [newNumber, setNewNumber] = useState("");
+    const [search, setSearch] = useState("");
 
     const addName = (e) => {
         e.preventDefault();
@@ -30,6 +32,13 @@ const App = () => {
         setNewNumber("");
     };
 
+    const filterResults = () => {
+        const regex = new RegExp(search, "i");
+        const filteredResults = () =>
+            persons.filter((person) => person.name.match(regex));
+        setPersons(filteredResults);
+    };
+
     const handleChange = (e) => {
         setNewName(e.target.value);
     };
@@ -38,9 +47,16 @@ const App = () => {
         setNewNumber(e.target.value);
     };
 
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value);
+        filterResults();
+    };
+
     return (
         <div>
             <h2>Phonebook</h2>
+            <p>filter shown with </p>{" "}
+            <input value={search} onChange={handleSearchChange} />
             <form onSubmit={addName}>
                 <div>
                     name: <input value={newName} onChange={handleChange} />
