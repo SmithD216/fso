@@ -63,6 +63,14 @@ const App = () => {
         filterResults();
     };
 
+    const deletePerson = (person) => {
+        personService.deletePerson(person.id).then((response) => {
+            personService.getAll().then((response) => {
+                setPersons(response.data);
+            });
+        });
+    };
+
     return (
         <div>
             <h2>Phonebook</h2>
@@ -75,7 +83,7 @@ const App = () => {
                 handleNumberChange={handleNumberChange}
             />
             <h2>Numbers</h2>
-            <Persons persons={persons} />
+            <Persons persons={persons} deletePerson={deletePerson} />
         </div>
     );
 };
