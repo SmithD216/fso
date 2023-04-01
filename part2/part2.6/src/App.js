@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import Filter from "./Filter";
 import Persons from "./Persons";
 import Form from "./Form";
-import axios from "axios";
 import personService from "./services/people";
+import Notification from "./Notification";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
     const [newName, setNewName] = useState("");
     const [newNumber, setNewNumber] = useState("");
     const [search, setSearch] = useState("");
+    const [message, setMessage] = useState(null);
 
     useEffect(() => {
         personService.getAll().then((response) => {
@@ -38,7 +39,10 @@ const App = () => {
         personService.create(nameObject).then((response) => {
             setPersons(persons.concat(response.data));
         });
-
+        setMessage(`${nameObject.name} was added`);
+        setTimeout(() => {
+            setMessage(null);
+        }, 5000);
         setNewName("");
         setNewNumber("");
     };
@@ -69,11 +73,16 @@ const App = () => {
                 setPersons(response.data);
             });
         });
+        setMessage(`${person.name} was deleted`);
+        setTimeout(() => {
+            setMessage(null);
+        }, 5000);
     };
 
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={message} />
             <Filter search={search} onChange={handleSearchChange} />
             <Form
                 addName={addName}
