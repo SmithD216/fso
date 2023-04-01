@@ -23,7 +23,6 @@ function App() {
 
     const handleChange = (e) => {
         setSearch(e.target.value);
-        console.log(search);
         filterResults();
     };
 
@@ -32,6 +31,9 @@ function App() {
     return (
         <div className="App">
             <input type="text" onChange={handleChange} value={search} />
+            {countries.map((country) => {
+                return <li>{country.name.common}</li>;
+            })}
         </div>
     );
 }
