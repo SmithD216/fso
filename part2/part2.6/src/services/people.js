@@ -10,7 +10,9 @@ const create = (newObject) => {
 };
 
 const deletePerson = (id) => {
-    return axios.delete(`${baseUrl}/${id}`);
+    return axios.delete(`${baseUrl}/${id}`).catch((error) => {
+        console.log("There was an error");
+    });
 };
 
 export default {

@@ -69,9 +69,14 @@ const App = () => {
 
     const deletePerson = (person) => {
         personService.deletePerson(person.id).then((response) => {
-            personService.getAll().then((response) => {
-                setPersons(response.data);
-            });
+            personService
+                .getAll()
+                .then((response) => {
+                    setPersons(response.data);
+                })
+                .catch((error) => {
+                    console.log("There was an error");
+                });
         });
         setMessage(`${person.name} was deleted`);
         setTimeout(() => {
