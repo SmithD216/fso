@@ -37,30 +37,38 @@ function App() {
         setResults(result);
     };
 
+    const displayOne = (country, languages) => {
+        return (
+            <>
+                <h1>{country.name.common}</h1>
+                <p>capital {country.capital}</p>
+                <p>area {country.area}</p>
+                <h2>languages:</h2>
+                <div>
+                    {languages.map((item, index) => {
+                        return <li key={index}>{item}</li>;
+                    })}
+                </div>
+                <div style={{ fontSize: 250 }}>{country.flag}</div>
+            </>
+        );
+    };
+
     const getDisplay = () => {
         if (results.length > 10) {
             return <div>Results greater than 10</div>;
         } else if (results.length === 1) {
             const country = results[0];
             const languages = Object.values(country.languages);
-
-            return (
-                <>
-                    <h1>{country.name.common}</h1>
-                    <p>capital {country.capital}</p>
-                    <p>area {country.area}</p>
-                    <h2>languages:</h2>
-                    <div>
-                        {languages.map((item, index) => {
-                            return <li key={index}>{item}</li>;
-                        })}
-                    </div>
-                    <div style={{ fontSize: 250 }}>{country.flag}</div>
-                </>
-            );
+            return displayOne(country, languages);
         } else {
             return results.map((country, index) => {
-                return <li key={index}>{country.name.common}</li>;
+                return (
+                    <li key={index}>
+                        {country.name.common}
+                        <button>show</button>
+                    </li>
+                );
             });
         }
     };
