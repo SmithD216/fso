@@ -6,6 +6,7 @@ import { useState } from "react";
 function App() {
     const [countries, setCountries] = useState([]);
     const [search, setSearch] = useState("");
+    const [results, setResults] = useState([]);
 
     const getAll = () => {
         return axios.get("https://restcountries.com/v3.1/all");
@@ -26,12 +27,18 @@ function App() {
         filterResults();
     };
 
-    const filterResults = () => {};
+    const filterResults = () => {
+        const results = countries.filter((item) =>
+            item.name.common.toLowerCase().includes(search.toLowerCase())
+        );
+        setResults(results);
+        console.log(results);
+    };
 
     return (
         <div className="App">
             <input type="text" onChange={handleChange} value={search} />
-            {countries.map((country) => {
+            {results.map((country) => {
                 return <li>{country.name.common}</li>;
             })}
         </div>
