@@ -37,16 +37,21 @@ function App() {
         setResults(result);
     };
 
+    const getDisplay = () => {
+        if (results.length > 10) {
+            return <div>Results greater than 10</div>;
+        } else if (results.length === 1) {
+        } else {
+            return results.map((country, index) => {
+                return <li key={index}>{country.name.common}</li>;
+            });
+        }
+    };
+
     return (
         <div className="App">
             <input type="text" onChange={handleChange} value={search} />
-            {results.length > 10 ? (
-                <div>Results greater than 10 please specify</div>
-            ) : (
-                results.map((country, index) => {
-                    return <li key={index}>{country.name.common}</li>;
-                })
-            )}
+            {getDisplay()}
         </div>
     );
 }
