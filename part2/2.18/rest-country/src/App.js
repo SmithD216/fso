@@ -24,23 +24,29 @@ function App() {
 
     const handleChange = (e) => {
         setSearch(e.target.value);
-        filterResults();
+        filterResults(e);
     };
 
-    const filterResults = () => {
-        const results = countries.filter((item) =>
-            item.name.common.toLowerCase().includes(search.toLowerCase())
+    const filterResults = (e) => {
+        const result = countries.filter((item) =>
+            item.name.common
+                .toLowerCase()
+                .includes(e.target.value.toLowerCase())
         );
-        setResults(results);
-        console.log(results);
+
+        setResults(result);
     };
 
     return (
         <div className="App">
             <input type="text" onChange={handleChange} value={search} />
-            {results.map((country, index) => {
-                return <li key={index}>{country.name.common}</li>;
-            })}
+            {results.length > 10 ? (
+                <div>Results greater than 10 please specify</div>
+            ) : (
+                results.map((country, index) => {
+                    return <li key={index}>{country.name.common}</li>;
+                })
+            )}
         </div>
     );
 }
