@@ -38,8 +38,8 @@ function App() {
     return (
         <div className="App">
             <input type="text" onChange={handleChange} value={search} />
-            {results.map((country) => {
-                return <li>{country.name.common}</li>;
+            {results.map((country, index) => {
+                return <li key={index}>{country.name.common}</li>;
             })}
         </div>
     );
