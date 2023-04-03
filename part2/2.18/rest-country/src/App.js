@@ -2,11 +2,13 @@ import "./App.css";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import DisplayOne from "./DisplayOne";
 
 function App() {
     const [countries, setCountries] = useState([]);
     const [search, setSearch] = useState("");
     const [results, setResults] = useState([]);
+    const [display, setDisplay] = useState(false);
 
     const getAll = () => {
         return axios.get("https://restcountries.com/v3.1/all");
@@ -37,36 +39,30 @@ function App() {
         setResults(result);
     };
 
-    const displayOne = (country, languages) => {
-        return (
-            <>
-                <h1>{country.name.common}</h1>
-                <p>capital {country.capital}</p>
-                <p>area {country.area}</p>
-                <h2>languages:</h2>
-                <div>
-                    {languages.map((item, index) => {
-                        return <li key={index}>{item}</li>;
-                    })}
-                </div>
-                <div style={{ fontSize: 250 }}>{country.flag}</div>
-            </>
-        );
+    const toggleOne = (e) => {
+        setDisplay(!display);
     };
 
     const getDisplay = () => {
         if (results.length > 10) {
-            return <div>Results greater than 10</div>;
+            return (
+                <div>
+                    <div>Results greater than 10</div>
+                </div>
+            );
         } else if (results.length === 1) {
-            const country = results[0];
-            const languages = Object.values(country.languages);
-            return displayOne(country, languages);
+            return (
+                <DisplayOne
+                    country={results[0]}
+                    languages={Object.values(results[0].languages)}
+                />
+            );
         } else {
             return results.map((country, index) => {
                 return (
                     <li key={index}>
                         {country.name.common}
-                        <button>show</button>
+                        <button onClick={toggleOne}>show</button>
                     </li>
                 );
             });
